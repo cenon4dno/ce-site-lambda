@@ -10,7 +10,8 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 module.exports.getItem = (event, context, callback) => {
 var params = {
     TableName: process.env.CONTENT_TABLE,
-    ProjectionExpression: "id, title, icon, content, type, page",
+    ProjectionExpression: "id, title, icon, content, #type, page",
+    ExpressionAttributeNames: { "#type": "type" },
     Key: {
       "id": event.pathParameters.id,
       "sort": event.pathParameters.id
@@ -40,7 +41,8 @@ dynamoDb.get(params).promise()
 module.exports.getList = (event, context, callback) => {
     var params = {
         TableName: process.env.CONTENT_TABLE,
-        ProjectionExpression: "id, title, icon, content"
+        ProjectionExpression: "id, title, icon, content, #type, page",
+        ExpressionAttributeNames: { "#type": "type" }
     };
   
     const onScan = (err, data) => {
@@ -54,7 +56,7 @@ module.exports.getList = (event, context, callback) => {
                     "Access-Control-Allow-Origin" : "*" // Required for CORS support to work
                 },
                 body: JSON.stringify({
-                    configs: data.Items
+                    contents: data.Items
                 })
             });
         }
