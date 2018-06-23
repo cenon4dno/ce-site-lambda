@@ -41,7 +41,7 @@ dynamoDb.get(params).promise()
 module.exports.getList = (event, context, callback) => {
     var params = {
         TableName: process.env.CONTENT_TABLE,
-        ProjectionExpression: "id, title, icon, content, #type, page, sort, #section",
+        ProjectionExpression: "id, title, icon, content, #type, page, sort, #section, details",
         ExpressionAttributeNames: { "#type": "type", "#section": "section"}
     };
   
