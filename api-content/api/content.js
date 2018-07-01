@@ -41,8 +41,8 @@ dynamoDb.get(params).promise()
 module.exports.getList = (event, context, callback) => {
     var params = {
         TableName: process.env.CONTENT_TABLE,
-        ProjectionExpression: "id, title, icon, content, #type, page, sort, #section, details",
-        ExpressionAttributeNames: { "#type": "type", "#section": "section"}
+        ProjectionExpression: "id, title, icon, content, #type, page, sort, #section, details, #status",
+        ExpressionAttributeNames: { "#type": "type", "#section": "section", "#status": "status"}
     };
   
     const onScan = (err, data) => {
