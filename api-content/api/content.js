@@ -10,8 +10,8 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 module.exports.getItem = (event, context, callback) => {
 var params = {
     TableName: process.env.CONTENT_TABLE,
-    ProjectionExpression: "id, title, icon, content, #type, page, #section",
-    ExpressionAttributeNames: { "#type": "type", "#section": "section" },
+    ProjectionExpression: "id, title, icon, content, #type, page, #section, #options",
+    ExpressionAttributeNames: { "#type": "type", "#section": "section", "#options": "options"},
     Key: {
       "id": event.pathParameters.id,
       "sort": event.pathParameters.id
@@ -41,8 +41,8 @@ dynamoDb.get(params).promise()
 module.exports.getList = (event, context, callback) => {
     var params = {
         TableName: process.env.CONTENT_TABLE,
-        ProjectionExpression: "id, title, icon, content, #type, page, sort, #section, details, #status",
-        ExpressionAttributeNames: { "#type": "type", "#section": "section", "#status": "status"}
+        ProjectionExpression: "id, title, icon, content, #type, page, sort, #section, details, #status, #options",
+        ExpressionAttributeNames: { "#type": "type", "#section": "section", "#status": "status", "#options": "options"}
     };
   
     const onScan = (err, data) => {
